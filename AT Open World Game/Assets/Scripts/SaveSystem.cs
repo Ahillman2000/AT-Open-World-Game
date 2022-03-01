@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
-    public static void SaveChunk(Chunk chunk)
+    /*public static void SaveChunk(Chunk chunk)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/chunk.dat";
@@ -36,5 +36,5 @@ public static class SaveSystem
             Debug.LogError("Save file not found");
             return null;
         }
-    }
+    }*/
 }

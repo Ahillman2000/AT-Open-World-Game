@@ -9,18 +9,23 @@ public class ChunkLoader : MonoBehaviour
 
     private bool loaded;
 
-    public void LoadChunk(TerrainData terrainData, Vector3 position)
+    public void LoadChunk(TerrainData terrainData, Vector3 position, GameObject parent)
     {
         var _terrainData = Resources.Load<TerrainData>("Terrain/Terrain_split/" + terrainData.name);
 
         chunk = Terrain.CreateTerrainGameObject(_terrainData);
 
         chunk.transform.position = new Vector3(position.x, position.y, position.z);
+
+        chunk.transform.SetParent(parent.transform);
     }
 
     public void UnloadChunk()
     {
-        Destroy(chunk);
+        if(chunk != null)
+        {
+            Destroy(chunk);
+        }
         Resources.UnloadUnusedAssets();
     }
 
