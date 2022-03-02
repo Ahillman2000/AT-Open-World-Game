@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Chunk : MonoBehaviour
 {
-    /*public Vector3 positon;
-    public TerrainData terrainData;
+   /* public Vector3[] vertices;
+    public int[] triangles;
+
+    private void Start()
+    {
+    }
 
     public void SaveChunk()
     {
@@ -14,7 +18,6 @@ public class Chunk : MonoBehaviour
 
     public void UnloadChunk()
     {
-        //
     }
 
     public void LoadChunk()

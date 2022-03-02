@@ -45,19 +45,16 @@ public class MeshGenerator : MonoBehaviour
                 GameObject chunk = new GameObject("chunk " + x + " , " + z );
                 chunk.transform.position = new Vector3(x * chunkSize, 0, z * chunkSize);
 
-                chunk.AddComponent<MeshFilter>();
-                chunk.AddComponent<MeshRenderer>();
-                chunk.AddComponent<MeshCollider>();
-
                 mesh = new Mesh();
                 mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-                //GetComponent<MeshFilter>().mesh = mesh;
                 CreateShape(x * chunkSize, z * chunkSize, chunkSize);
                 UpdateMesh();
 
-                chunk.GetComponent<MeshFilter>().sharedMesh = mesh;
-                chunk.GetComponent<MeshRenderer>().material = terrainMaterial;
-                chunk.GetComponent<MeshCollider>().sharedMesh = mesh;
+                chunk.AddComponent<ChunkData>();
+                chunk.GetComponent<ChunkData>().SetMesh(mesh, terrainMaterial);
+
+                chunk.GetComponent<ChunkData>().Save(chunk.name);
+                //chunk.GetComponent<ChunkData>().Load();
             }
         }
     }
