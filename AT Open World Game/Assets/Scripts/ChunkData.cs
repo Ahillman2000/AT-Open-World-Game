@@ -13,6 +13,8 @@ class ChunkMesh
 
 public class ChunkData : MonoBehaviour
 {
+    MeshGenerator meshGenerator;
+
     Mesh mesh;
     Material material;
     ChunkMesh chunkMesh;
@@ -20,26 +22,30 @@ public class ChunkData : MonoBehaviour
     string json;
     string dataPath;
 
-    [SerializeField] private float drawDistance = 100f;
-    private bool loaded;
+    public bool loaded;
 
     private void Start()
     {
-        
+        meshGenerator = GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>();
     }
 
     public void SetMesh(Mesh _meshToSet, Material _material)
     {
-        this.gameObject.AddComponent<MeshFilter>();
-        this.gameObject.AddComponent<MeshRenderer>();
-        this.gameObject.AddComponent<MeshCollider>();
+        if(this.GetComponent<MeshFilter>() == null)
+        {
+            this.gameObject.AddComponent<MeshFilter>();
+            this.gameObject.AddComponent<MeshRenderer>();
+            this.gameObject.AddComponent<MeshCollider>();
 
-        this.GetComponent<MeshFilter>().sharedMesh = _meshToSet;
-        this.GetComponent<MeshRenderer>().material = _material;
-        this.GetComponent<MeshCollider>().sharedMesh = _meshToSet;
+            this.GetComponent<MeshFilter>().sharedMesh = _meshToSet;
+            this.GetComponent<MeshRenderer>().material = _material;
+            this.GetComponent<MeshCollider>().sharedMesh = _meshToSet;
+        }
 
         mesh = _meshToSet;
         material = _material;
+
+        loaded = true;
     }
     public Mesh GetMesh()
     {
@@ -62,7 +68,7 @@ public class ChunkData : MonoBehaviour
         chunkMesh.serializableMaterial = material;
 
         json = JsonUtility.ToJson(chunkMesh, true);
-        Debug.Log(json);
+        //Debug.Log(json);
 
         dataPath = Application.persistentDataPath + "/" + name + ".json";
         File.WriteAllText(dataPath, json);
@@ -81,7 +87,7 @@ public class ChunkData : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        /*if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             //Save(this.gameObject.name);
             Load();
@@ -90,15 +96,15 @@ public class ChunkData : MonoBehaviour
         {
             ClearMesh();
             //Load();
-        }
+        }*/
 
-        /*if ((Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= drawDistance) && !loaded)
+        if ((Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= meshGenerator.drawDistance) && !loaded)
         {
             Load();
         }
-        else if ((Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) > drawDistance) && loaded)
+        else if ((Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) > meshGenerator.drawDistance) && loaded)
         {
             ClearMesh();
-        }*/
+        }
     }
 }

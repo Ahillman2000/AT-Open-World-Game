@@ -29,6 +29,9 @@ public class MeshGenerator : MonoBehaviour
 
     Dictionary<Vector3, Chunk> chunkDictionary = new Dictionary<Vector3, Chunk>();
 
+    [Range(100, 678)]
+    public float drawDistance = 100f;
+
     void Start()
     {
         //this.transform.position = new Vector3(-(xSize / 2), 0, -(zSize / 2));
