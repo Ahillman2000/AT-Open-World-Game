@@ -25,27 +25,38 @@ public class MeshGenerator : MonoBehaviour
     private float minTerrainHeight;
     private float maxTerrainHeight;
 
-    [SerializeField] Material terrainMaterial; 
+    [SerializeField] Material terrainMaterial;
 
-    Dictionary<Vector3, Chunk> chunkDictionary = new Dictionary<Vector3, Chunk>();
-
-    [Range(100, 678)]
-    public float drawDistance = 100f;
+    public List<GameObject> chunks;
 
     void Start()
     {
         //this.transform.position = new Vector3(-(xSize / 2), 0, -(zSize / 2));
+
+        //GenerateMap();
+    }
+
+    [ContextMenu ("GenerateMap")]
+    private void GenerateMap()
+    {
+        chunks = new List<GameObject>();
+        Destroy(GameObject.Find("Map"));
 
         xSize = heightMap.width;
         zSize = heightMap.height;
 
         numberOfChunks = (int)(xSize / chunkSize) + 1;
 
+        GameObject map = new GameObject("Map");
+
         for (int x = 0; x < numberOfChunks; x++)
         {
             for (int z = 0; z < numberOfChunks; z++)
             {
-                GameObject chunk = new GameObject("chunk " + x + " , " + z );
+                GameObject chunk = new GameObject("chunk " + x + " , " + z);
+
+                chunks.Add(chunk);
+
                 chunk.transform.position = new Vector3(x * chunkSize, 0, z * chunkSize);
 
                 mesh = new Mesh();
@@ -53,14 +64,17 @@ public class MeshGenerator : MonoBehaviour
                 CreateShape(x * chunkSize, z * chunkSize, chunkSize);
                 UpdateMesh();
 
-                chunk.AddComponent<ChunkData>();
-                chunk.GetComponent<ChunkData>().SetMesh(mesh, terrainMaterial);
+                chunk.AddComponent<ChunkSaveSystem>();
+                chunk.GetComponent<ChunkSaveSystem>().SetMesh(mesh, terrainMaterial);
+                chunk.GetComponent<ChunkSaveSystem>().Save();
 
-                chunk.GetComponent<ChunkData>().Save(chunk.name);
-                //chunk.GetComponent<ChunkData>().Load();
+                chunk.transform.parent = map.transform;
+
+                //chunk.GetComponent<ChunkData>().Load()
             }
         }
     }
+
 
     private void CreateShape(int offsetX, int offsetZ, int chunkSize)
     {
@@ -79,12 +93,10 @@ public class MeshGenerator : MonoBehaviour
                 {
                     maxTerrainHeight = height;
                 }
-                if(height < minTerrainHeight)
+                if(height <= minTerrainHeight)
                 {
                     minTerrainHeight = height;
                 }
-
-                height = Mathf.InverseLerp(minTerrainHeight, maxTerrainHeight, height);
 
                 colours[i] = gradient.Evaluate(height);
 
@@ -95,6 +107,17 @@ public class MeshGenerator : MonoBehaviour
         triangles          = new int[chunkSize * chunkSize * 6];
         int vertexIndex    = 0;
         int trianglesIndex = 0;
+
+        for (int i = 0, z = 0; z <= chunkSize; z++)
+        {
+            for (int x = 0; x <= chunkSize; x++)
+            {
+               
+                float height = Mathf.InverseLerp(minTerrainHeight, maxTerrainHeight, vertices[i].y);
+
+                colours[i] = gradient.Evaluate(height);
+            }
+        }
 
         for (int z = 0; z < chunkSize; z++)
         {
