@@ -14,6 +14,8 @@ public class MeshGenerator : MonoBehaviour
     private int xSize;
     private int zSize;
 
+    private string mapName = "===== MAP =====";
+
     [SerializeField] private float scale = 20f;
 
     [SerializeField] Texture2D heightMap;
@@ -22,8 +24,8 @@ public class MeshGenerator : MonoBehaviour
     int chunkSize = 32;
     int numberOfChunks;
 
-    private float minTerrainHeight;
-    private float maxTerrainHeight;
+    private float minTerrainHeight = 1000;
+    private float maxTerrainHeight = -1000;
 
     [SerializeField] Material terrainMaterial;
 
@@ -40,14 +42,18 @@ public class MeshGenerator : MonoBehaviour
     private void GenerateMap()
     {
         chunks = new List<GameObject>();
-        Destroy(GameObject.Find("Map"));
+        
+        if(GameObject.Find(mapName) != null)
+        {
+            DestroyImmediate(GameObject.Find(mapName));
+        }
 
         xSize = heightMap.width;
         zSize = heightMap.height;
 
-        numberOfChunks = (int)(xSize / chunkSize) + 1;
+        numberOfChunks = (int)(xSize / chunkSize);
 
-        GameObject map = new GameObject("Map");
+        GameObject map = new GameObject(mapName);
 
         for (int x = 0; x < numberOfChunks; x++)
         {
@@ -86,38 +92,31 @@ public class MeshGenerator : MonoBehaviour
             for (int x = 0; x <= chunkSize; x++)
             {
                 vertices[i] = new Vector3(x, heightMap.GetPixel(x + offsetX, z + offsetZ).r * scale, z);
-
-                float height = vertices[i].y;
                 
-                if (height > maxTerrainHeight)
+                if (vertices[i].y > maxTerrainHeight)
                 {
-                    maxTerrainHeight = height;
+                    maxTerrainHeight = vertices[i].y;
                 }
-                if(height <= minTerrainHeight)
+                if(vertices[i].y < minTerrainHeight)
                 {
-                    minTerrainHeight = height;
+                    minTerrainHeight = vertices[i].y;
                 }
-
-                colours[i] = gradient.Evaluate(height);
 
                 i++;
             }
         }
 
+        for (int i = 0; i < vertices.Length; i++)
+        {
+
+            float height = Mathf.InverseLerp(minTerrainHeight, maxTerrainHeight, vertices[i].y);
+
+            colours[i] = gradient.Evaluate(height);
+        }
+
         triangles          = new int[chunkSize * chunkSize * 6];
         int vertexIndex    = 0;
         int trianglesIndex = 0;
-
-        for (int i = 0, z = 0; z <= chunkSize; z++)
-        {
-            for (int x = 0; x <= chunkSize; x++)
-            {
-               
-                float height = Mathf.InverseLerp(minTerrainHeight, maxTerrainHeight, vertices[i].y);
-
-                colours[i] = gradient.Evaluate(height);
-            }
-        }
 
         for (int z = 0; z < chunkSize; z++)
         {
@@ -141,17 +140,12 @@ public class MeshGenerator : MonoBehaviour
     private void UpdateMesh()
     {
         mesh.Clear();
-        //mesh.vertices  = vertices;
         mesh.SetVertices(vertices);
         mesh.SetTriangles(triangles, 0);
-        //mesh.triangles = triangles;
         mesh.SetColors(colours);
-        //mesh.colors = colours;
 
         mesh.RecalculateNormals();
 
         mesh.RecalculateBounds();
-        //MeshCollider meshCollider = GetComponent<MeshCollider>();
-        //meshCollider.sharedMesh = mesh;
     }
 }
