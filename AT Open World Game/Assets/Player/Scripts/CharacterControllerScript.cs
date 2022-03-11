@@ -22,6 +22,8 @@ public class CharacterControllerScript : MonoBehaviour
     private bool isGrounded = true;
     [SerializeField] float JumpHeight        = 1;
     [SerializeField] float gravityMultiplier = 1.8f;
+    
+    Animator animationController;
 
     private void Awake()
     {
@@ -46,6 +48,8 @@ public class CharacterControllerScript : MonoBehaviour
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
+
+        animationController = GetComponentInChildren<Animator>();
     }
 
     void Gravity()
@@ -87,6 +91,11 @@ public class CharacterControllerScript : MonoBehaviour
         if (moveVector != Vector3.zero)
         {
             transform.forward = Vector3.Lerp(transform.forward, moveVector, LookSpeed);
+            animationController.SetBool("Move", true);
+        }
+        else
+        {
+            animationController.SetBool("Move", false);
         }
     }
 

@@ -39,11 +39,11 @@ public class ChunkSaveSystem : MonoBehaviour
             this.GetComponent<MeshRenderer>().material = _material;
             this.GetComponent<MeshCollider>().sharedMesh = _meshToSet;
 
-            Debug.Log("setting chunk...");
-        }
+            //Debug.Log("setting chunk...");
 
-        mesh = _meshToSet;
-        material = _material;
+            mesh = _meshToSet;
+            material = _material;
+        }
 
         loaded = true;
     }
@@ -54,7 +54,7 @@ public class ChunkSaveSystem : MonoBehaviour
 
     public void ClearMesh()
     {
-        Debug.Log("Unloading chunk ...");
+        //Debug.Log("Unloading chunk ...");
 
         Destroy(this.GetComponent<MeshFilter>());
         Destroy(this.GetComponent<MeshRenderer>());
@@ -84,10 +84,15 @@ public class ChunkSaveSystem : MonoBehaviour
 
         if (!loaded && dataPath != null)
         {
-            Debug.Log("Loading chunk ...");
+            //Debug.Log("Loading chunk ...");
             json = File.ReadAllText(dataPath);
 
             ChunkData loadedChunkMesh = JsonUtility.FromJson<ChunkData>(json);
+
+            if (this.gameObject.name == "chunk 4 , 0")
+            {
+                Debug.Log("Loading chunk 4 , 0. Datapath: " + dataPath + " with values: " + loadedChunkMesh.serializableMesh + " , " + loadedChunkMesh.serializableMaterial);
+            }
 
             SetMesh(loadedChunkMesh.serializableMesh, loadedChunkMesh.serializableMaterial);
             //Debug.Log("Mesh: " + loadedChunkMesh.serializableMesh);

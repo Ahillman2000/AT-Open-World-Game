@@ -68,11 +68,13 @@ public class MeshGenerator : MonoBehaviour
                 mesh = new Mesh();
                 mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
                 CreateShape(x * chunkSize, z * chunkSize, chunkSize);
-                UpdateMesh();
+                SetColour();
 
                 chunk.AddComponent<ChunkSaveSystem>();
                 chunk.GetComponent<ChunkSaveSystem>().SetMesh(mesh, terrainMaterial);
                 chunk.GetComponent<ChunkSaveSystem>().Save();
+
+                UpdateMesh();
 
                 chunk.transform.parent = map.transform;
 
@@ -92,12 +94,12 @@ public class MeshGenerator : MonoBehaviour
             for (int x = 0; x <= chunkSize; x++)
             {
                 vertices[i] = new Vector3(x, heightMap.GetPixel(x + offsetX, z + offsetZ).r * scale, z);
-                
+
                 if (vertices[i].y > maxTerrainHeight)
                 {
                     maxTerrainHeight = vertices[i].y;
                 }
-                if(vertices[i].y < minTerrainHeight)
+                if (vertices[i].y < minTerrainHeight)
                 {
                     minTerrainHeight = vertices[i].y;
                 }
@@ -106,16 +108,8 @@ public class MeshGenerator : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < vertices.Length; i++)
-        {
-
-            float height = Mathf.InverseLerp(minTerrainHeight, maxTerrainHeight, vertices[i].y);
-
-            colours[i] = gradient.Evaluate(height);
-        }
-
-        triangles          = new int[chunkSize * chunkSize * 6];
-        int vertexIndex    = 0;
+        triangles = new int[chunkSize * chunkSize * 6];
+        int vertexIndex = 0;
         int trianglesIndex = 0;
 
         for (int z = 0; z < chunkSize; z++)
@@ -137,15 +131,26 @@ public class MeshGenerator : MonoBehaviour
         }
     }
 
+    private void SetColour()
+    {
+        for (int i = 0; i < vertices.Length; i++)
+        {
+
+            float height = Mathf.InverseLerp(minTerrainHeight, maxTerrainHeight, vertices[i].y);
+
+            colours[i] = gradient.Evaluate(height);
+        }
+    }
+
     private void UpdateMesh()
     {
         mesh.Clear();
+
         mesh.SetVertices(vertices);
         mesh.SetTriangles(triangles, 0);
         mesh.SetColors(colours);
-
+        
         mesh.RecalculateNormals();
-
         mesh.RecalculateBounds();
     }
 }
