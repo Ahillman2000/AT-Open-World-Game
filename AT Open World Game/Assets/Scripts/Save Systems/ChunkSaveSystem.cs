@@ -84,15 +84,10 @@ public class ChunkSaveSystem : MonoBehaviour
 
         if (!loaded && dataPath != null)
         {
-            //Debug.Log("Loading chunk ...");
+            //Debug.Log("Loading " + this.gameObject.name + ". Datapath: " + dataPath + " with values: " + loadedChunkMesh.serializableMesh + " , " + loadedChunkMesh.serializableMaterial);
             json = File.ReadAllText(dataPath);
 
             ChunkData loadedChunkMesh = JsonUtility.FromJson<ChunkData>(json);
-
-            if (this.gameObject.name == "chunk 4 , 0")
-            {
-                Debug.Log("Loading chunk 4 , 0. Datapath: " + dataPath + " with values: " + loadedChunkMesh.serializableMesh + " , " + loadedChunkMesh.serializableMaterial);
-            }
 
             SetMesh(loadedChunkMesh.serializableMesh, loadedChunkMesh.serializableMaterial);
             //Debug.Log("Mesh: " + loadedChunkMesh.serializableMesh);
