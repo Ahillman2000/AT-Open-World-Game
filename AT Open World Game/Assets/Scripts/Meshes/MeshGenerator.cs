@@ -21,8 +21,8 @@ public class MeshGenerator : MonoBehaviour
     [SerializeField] Texture2D heightMap;
     [SerializeField] Gradient gradient;
 
-    int chunkSize = 32;
-    int numberOfChunks;
+    public int chunkSize = 32;
+    public int numberOfChunks;
 
     private float minTerrainHeight = 1000;
     private float maxTerrainHeight = -1000;
@@ -77,8 +77,6 @@ public class MeshGenerator : MonoBehaviour
                 UpdateMesh();
 
                 chunk.transform.parent = map.transform;
-
-                //chunk.GetComponent<ChunkData>().Load()
             }
         }
     }
@@ -116,7 +114,6 @@ public class MeshGenerator : MonoBehaviour
         {
             for (int x = 0; x < chunkSize; x++)
             {
-
                 triangles[trianglesIndex + 0] = vertexIndex + 0;
                 triangles[trianglesIndex + 1] = vertexIndex + chunkSize + 1;
                 triangles[trianglesIndex + 2] = vertexIndex + 1;

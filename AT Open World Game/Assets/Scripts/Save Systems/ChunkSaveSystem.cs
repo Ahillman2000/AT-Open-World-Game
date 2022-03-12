@@ -24,7 +24,7 @@ public class ChunkSaveSystem : MonoBehaviour
 
     private void Start()
     {
-        //Save(this.gameObject.name);
+
     }
 
     public void SetMesh(Mesh _meshToSet, Material _material)
@@ -52,7 +52,38 @@ public class ChunkSaveSystem : MonoBehaviour
         return mesh;
     }
 
-    public void ClearMesh()
+    public void Save()
+    {
+        //Debug.Log("Saving chunk ...");
+
+        chunkMesh = new ChunkData();
+
+        chunkMesh.serializableMesh = mesh;
+        chunkMesh.serializableMaterial = material;
+
+        json = JsonUtility.ToJson(chunkMesh, true);
+        dataPath = Application.persistentDataPath + "/" + this.gameObject.name + ".json";
+        File.WriteAllText(dataPath, json);
+    }
+
+    public void Load()
+    {
+        dataPath = Application.persistentDataPath + "/" + this.gameObject.name + ".json";
+
+        if (!loaded && dataPath != null)
+        {
+            //Debug.Log("Loading chunk ...");
+
+            json = File.ReadAllText(dataPath);
+            ChunkData loadedChunkMesh = JsonUtility.FromJson<ChunkData>(json);
+
+            SetMesh(loadedChunkMesh.serializableMesh, loadedChunkMesh.serializableMaterial);
+
+            loaded = true;
+        }
+    }
+
+    public void UnloadChunk()
     {
         //Debug.Log("Unloading chunk ...");
 
@@ -61,38 +92,6 @@ public class ChunkSaveSystem : MonoBehaviour
         Destroy(this.GetComponent<MeshCollider>());
 
         loaded = false;
-    }
-
-    public void Save()
-    {
-        chunkMesh = new ChunkData();
-        chunkMesh.serializableMesh = mesh;
-        chunkMesh.serializableMaterial = material;
-
-        json = JsonUtility.ToJson(chunkMesh, true);
-        //Debug.Log(json);
-
-        //Debug.Log(Application.persistentDataPath + "/" + name + ".json");
-        dataPath = Application.persistentDataPath + "/" + this.gameObject.name + ".json";
-        File.WriteAllText(dataPath, json);
-    }
-
-    public void Load()
-    {
-        dataPath = Application.persistentDataPath + "/" + this.gameObject.name + ".json";
-        //Debug.Log(dataPath);
-
-        if (!loaded && dataPath != null)
-        {
-            //Debug.Log("Loading " + this.gameObject.name + ". Datapath: " + dataPath + " with values: " + loadedChunkMesh.serializableMesh + " , " + loadedChunkMesh.serializableMaterial);
-            json = File.ReadAllText(dataPath);
-
-            ChunkData loadedChunkMesh = JsonUtility.FromJson<ChunkData>(json);
-
-            SetMesh(loadedChunkMesh.serializableMesh, loadedChunkMesh.serializableMaterial);
-            //Debug.Log("Mesh: " + loadedChunkMesh.serializableMesh);
-            loaded = true;
-        }
     }
 
     private void Update()
@@ -108,13 +107,13 @@ public class ChunkSaveSystem : MonoBehaviour
             //Load();
         }*/
 
-        if ((Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= Player.Instance.drawDistance) && !loaded)
+        if ((Vector3.Distance(this.transform.position, Player.Instance.transform.position) <= Player.Instance.drawDistance) && !loaded)
         {
             Load();
         }
-        else if ((Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) > Player.Instance.drawDistance) && loaded)
+        else if ((Vector3.Distance(this.transform.position, Player.Instance.transform.position) > Player.Instance.drawDistance) && loaded)
         {
-            ClearMesh();
+            UnloadChunk();
         }
     }
 }

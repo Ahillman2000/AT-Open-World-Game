@@ -7,23 +7,37 @@ using UnityEngine;
 [SerializeField]
 class NPCData
 {
-    public Mesh serializableMesh;
-    public Material serializableMaterial;
+    //public Mesh serializableMesh;
+    //public Material serializableMaterial;
 
-    public Vector3 serializableCapsuleColliderCenter;
-    public float serializableCapsuleColliderRadius;
-    public float serializableCapsuleColliderHeight;
+    //public Vector3 serializableBoundsCenter;
+    //public Vector3 serializableBoundsExtent;
 
-    public bool serializableBoxColldierTrigger;
-    public Vector3 serializableBoxColliderCenter;
-    public Vector3 serializableBoxColliderSize;
+    //public Bounds serializableBounds;
+    //public Transform serializableRoot;
+
+    //public Vector3 serializableCapsuleColliderCenter;
+    //public float serializableCapsuleColliderRadius;
+    //public float serializableCapsuleColliderHeight;
+
+    //public bool serializableBoxColldierTrigger;
+    //public Vector3 serializableBoxColliderCenter;
+    //public Vector3 serializableBoxColliderSize;
+
+    public Vector3 serializablePosition;
 }
 
 public class NPCSaveSystem : MonoBehaviour
 {
     NPCData _NPCData;
-    Mesh mesh;
-    Material material;
+
+    [SerializeField] GameObject body;
+    //[SerializeField] Transform root;
+    //SkinnedMeshRenderer skin;
+    [SerializeField] GameObject canvas;
+
+    //Mesh mesh;
+    //Material material;
 
     CapsuleCollider capsuleCollider;
     BoxCollider boxCollider;
@@ -36,23 +50,37 @@ public class NPCSaveSystem : MonoBehaviour
 
     public bool loaded;
 
+    [SerializeField] private bool debug;
+
     private void Start()
     {
         meshGenerator = GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>();
 
-        mesh = this.GetComponent<MeshFilter>().mesh;
-        material = this.GetComponent<MeshRenderer>().material;
+        //skin = body.GetComponent<SkinnedMeshRenderer>();
+
+        //mesh = skin.sharedMesh;
+
+        //material = body.GetComponent<SkinnedMeshRenderer>().material;
         capsuleCollider = this.GetComponent<CapsuleCollider>();
         boxCollider = this.GetComponent<BoxCollider>();
+
+        //Save();
 
         loaded = true;
     }
 
-    public void Save()
+    /*public void Save()
     {
         _NPCData = new NPCData();
+
         _NPCData.serializableMesh = mesh;
         _NPCData.serializableMaterial = material;
+
+        //_NPCData.serializableBoundsCenter = skin.bounds.center;
+        //_NPCData.serializableBoundsExtent = skin.bounds.extents;
+
+        _NPCData.serializableBounds = skin.localBounds;
+        _NPCData.serializableRoot = root;
 
         _NPCData.serializableCapsuleColliderCenter = capsuleCollider.center;
         _NPCData.serializableCapsuleColliderRadius = capsuleCollider.radius;
@@ -63,38 +91,34 @@ public class NPCSaveSystem : MonoBehaviour
         _NPCData.serializableBoxColliderSize = boxCollider.size;
 
         json = JsonUtility.ToJson(_NPCData, true);
-        //Debug.Log(json);
-
         dataPath = Application.persistentDataPath + "/" + this.gameObject.name + ".json";
         File.WriteAllText(dataPath, json);
     }
 
-    private void UnloadAssets()
-    {
-        Destroy(this.GetComponent<MeshFilter>());
-        Destroy(this.GetComponent<MeshRenderer>());
-        Destroy(this.GetComponent<CapsuleCollider>());
-        Destroy(this.GetComponent<BoxCollider>());
-
-        loaded = false;
-    }
-
     public void Load()
     {
-        if(!loaded && dataPath != null)
+        dataPath = Application.persistentDataPath + "/" + this.gameObject.name + ".json";
+
+        if (!loaded && dataPath != null)
         {
             json = File.ReadAllText(dataPath);
             NPCData loadedNPCData = JsonUtility.FromJson<NPCData>(json);
 
-            if (this.GetComponent<MeshFilter>() == null)
+            if (this.GetComponent<SkinnedMeshRenderer>() == null)
             {
-                this.gameObject.AddComponent<MeshFilter>();
-                this.GetComponent<MeshFilter>().sharedMesh = loadedNPCData.serializableMesh;
-            }
-            if (this.GetComponent<MeshRenderer>() == null)
-            {
-                this.gameObject.AddComponent<MeshRenderer>();
-                this.GetComponent<MeshRenderer>().material = loadedNPCData.serializableMaterial;
+                //this.gameObject.AddComponent<MeshFilter>();
+                //this.GetComponent<MeshFilter>().sharedMesh = loadedNPCData.serializableMesh;
+
+                body.AddComponent<SkinnedMeshRenderer>();
+
+                body.GetComponent<SkinnedMeshRenderer>().localBounds  = loadedNPCData.serializableBounds;
+
+                body.GetComponent<SkinnedMeshRenderer>().sharedMesh = loadedNPCData.serializableMesh;
+
+                body.GetComponent<SkinnedMeshRenderer>().rootBone = loadedNPCData.serializableRoot;
+
+                body.GetComponent<SkinnedMeshRenderer>().sharedMaterial = loadedNPCData.serializableMaterial;
+                body.GetComponent<SkinnedMeshRenderer>().materials[0] = loadedNPCData.serializableMaterial;
             }
             if (this.GetComponent<CapsuleCollider>() == null)
             {
@@ -114,36 +138,55 @@ public class NPCSaveSystem : MonoBehaviour
                 this.GetComponent<BoxCollider>().center = loadedNPCData.serializableBoxColliderCenter;
                 this.GetComponent<BoxCollider>().size = loadedNPCData.serializableBoxColliderSize;
             }
+
+            canvas.enabled = true;
             loaded = true;
         }
     }
 
+    private void UnloadAssets()
+    {
+        //Destroy(this.GetComponent<MeshFilter>());
+        //Destroy(this.GetComponent<MeshRenderer>());
+        Destroy(body.GetComponent<SkinnedMeshRenderer>());
+        Destroy(this.GetComponent<CapsuleCollider>());
+        Destroy(this.GetComponent<BoxCollider>());
+
+        canvas.enabled = false;
+        loaded = false;
+    }*/
+
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Alpha1))
+        occupiedChunk = (int)(this.transform.position.z/32) + ((int)(this.transform.position.x/32) * 32);
+
+        if (debug)
         {
-            Save();
-            UnloadAssets();
+            Debug.Log("this object belongs to: " + meshGenerator.chunks[occupiedChunk].gameObject.name + ": " + meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Load();
-        }*/
 
-        occupiedChunk = (int)(this.transform.position.z/32) + ((int)(this.transform.position.x/32) * 16);
-        //Debug.Log(meshGenerator.chunks[occupiedChunk].gameObject.name);
-
-        if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && !loaded)
-        //if (Chunks.list[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && !loaded)
+        /*if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && !loaded)
         {
             Load();
         }
         else if (!meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && loaded)
-        //else if (!Chunks.list[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && loaded)
         {
-            Save();
             UnloadAssets();
-        }
+        }*/
 
+        if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded)
+        {
+            body.SetActive(true);
+            canvas.SetActive(true);
+            capsuleCollider.enabled = true;
+            boxCollider.enabled = true;
+        }
+        else if (!meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded)
+        {
+            body.SetActive(false);
+            canvas.SetActive(false);
+            capsuleCollider.enabled = false;
+            boxCollider.enabled = false;
+        }
     }
 }
