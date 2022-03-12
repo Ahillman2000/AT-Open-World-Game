@@ -6,14 +6,11 @@ using UnityEngine;
 [SerializeField]
 class NPCData
 {
-    //public Mesh serializableMesh;
-    //public Material serializableMaterial;
+    public Mesh serializableMesh;
+    public Material serializableMaterial;
 
-    //public Vector3 serializableBoundsCenter;
-    //public Vector3 serializableBoundsExtent;
-
-    //public Bounds serializableBounds;
-    //public Transform serializableRoot;
+    public Bounds serializableBounds;
+    public Transform serializableRoot;
 
     //public Vector3 serializableCapsuleColliderCenter;
     //public float serializableCapsuleColliderRadius;
@@ -31,12 +28,12 @@ public class NPCSaveSystem : MonoBehaviour
     NPCData _NPCData;
 
     [SerializeField] GameObject body;
-    //[SerializeField] Transform root;
-    //SkinnedMeshRenderer skin;
+    [SerializeField] Transform root;
+    SkinnedMeshRenderer skin;
     [SerializeField] GameObject canvas;
 
-    //Mesh mesh;
-    //Material material;
+    Mesh mesh;
+    Material material;
 
     CapsuleCollider capsuleCollider;
     BoxCollider boxCollider;
@@ -55,20 +52,19 @@ public class NPCSaveSystem : MonoBehaviour
     {
         meshGenerator = GameObject.FindGameObjectWithTag("MeshGenerator").GetComponent<MeshGenerator>();
 
-        //skin = body.GetComponent<SkinnedMeshRenderer>();
+        skin = body.GetComponent<SkinnedMeshRenderer>();
+        mesh = skin.sharedMesh;
+        material = skin.material;
 
-        //mesh = skin.sharedMesh;
-
-        //material = body.GetComponent<SkinnedMeshRenderer>().material;
         capsuleCollider = this.GetComponent<CapsuleCollider>();
         boxCollider = this.GetComponent<BoxCollider>();
 
-        //Save();
+        Save();
 
         loaded = true;
     }
 
-    /*public void Save()
+    public void Save()
     {
         _NPCData = new NPCData();
 
@@ -81,13 +77,13 @@ public class NPCSaveSystem : MonoBehaviour
         _NPCData.serializableBounds = skin.localBounds;
         _NPCData.serializableRoot = root;
 
-        _NPCData.serializableCapsuleColliderCenter = capsuleCollider.center;
+        /*_NPCData.serializableCapsuleColliderCenter = capsuleCollider.center;
         _NPCData.serializableCapsuleColliderRadius = capsuleCollider.radius;
         _NPCData.serializableCapsuleColliderHeight = capsuleCollider.height;
 
         _NPCData.serializableBoxColldierTrigger = boxCollider.isTrigger;
         _NPCData.serializableBoxColliderCenter = boxCollider.center;
-        _NPCData.serializableBoxColliderSize = boxCollider.size;
+        _NPCData.serializableBoxColliderSize = boxCollider.size;*/
 
         json = JsonUtility.ToJson(_NPCData, true);
         dataPath = Application.persistentDataPath + "/" + this.gameObject.name + ".json";
@@ -105,9 +101,6 @@ public class NPCSaveSystem : MonoBehaviour
 
             if (this.GetComponent<SkinnedMeshRenderer>() == null)
             {
-                //this.gameObject.AddComponent<MeshFilter>();
-                //this.GetComponent<MeshFilter>().sharedMesh = loadedNPCData.serializableMesh;
-
                 body.AddComponent<SkinnedMeshRenderer>();
 
                 body.GetComponent<SkinnedMeshRenderer>().localBounds  = loadedNPCData.serializableBounds;
@@ -116,10 +109,14 @@ public class NPCSaveSystem : MonoBehaviour
 
                 body.GetComponent<SkinnedMeshRenderer>().rootBone = loadedNPCData.serializableRoot;
 
+                // Use a helper method, in the following code block, to populate the bone array for the instance's skinned mesh renderer
+                SkinnedMeshBoneArrayPopulator.populateBoneArray(body.GetComponent<SkinnedMeshRenderer>());
+
                 body.GetComponent<SkinnedMeshRenderer>().sharedMaterial = loadedNPCData.serializableMaterial;
                 body.GetComponent<SkinnedMeshRenderer>().materials[0] = loadedNPCData.serializableMaterial;
             }
-            if (this.GetComponent<CapsuleCollider>() == null)
+            
+            /*if (this.GetComponent<CapsuleCollider>() == null)
             {
                 this.gameObject.AddComponent<CapsuleCollider>();
                 capsuleCollider = this.GetComponent<CapsuleCollider>();
@@ -136,24 +133,22 @@ public class NPCSaveSystem : MonoBehaviour
                 this.GetComponent<BoxCollider>().isTrigger = loadedNPCData.serializableBoxColldierTrigger;
                 this.GetComponent<BoxCollider>().center = loadedNPCData.serializableBoxColliderCenter;
                 this.GetComponent<BoxCollider>().size = loadedNPCData.serializableBoxColliderSize;
-            }
+            }*/
 
-            canvas.enabled = true;
+            canvas.SetActive(true);
             loaded = true;
         }
     }
 
     private void UnloadAssets()
     {
-        //Destroy(this.GetComponent<MeshFilter>());
-        //Destroy(this.GetComponent<MeshRenderer>());
         Destroy(body.GetComponent<SkinnedMeshRenderer>());
-        Destroy(this.GetComponent<CapsuleCollider>());
-        Destroy(this.GetComponent<BoxCollider>());
+        //Destroy(this.GetComponent<CapsuleCollider>());
+        //Destroy(this.GetComponent<BoxCollider>());
 
-        canvas.enabled = false;
+        canvas.SetActive(false);
         loaded = false;
-    }*/
+    }
 
     private void Update()
     {
@@ -164,32 +159,42 @@ public class NPCSaveSystem : MonoBehaviour
             Debug.Log("this object belongs to: " + meshGenerator.chunks[occupiedChunk].gameObject.name + ": " + meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded);
         }
 
-        /*if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && !loaded)
+        if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && !loaded)
         {
             Load();
         }
         else if (!meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && loaded)
         {
             UnloadAssets();
-        }*/
-
-        if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && !loaded)
-        {
-            body.SetActive(true);
-            canvas.SetActive(true);
-            capsuleCollider.enabled = true;
-            boxCollider.enabled = true;
-
-            loaded = true;
         }
-        else if (!meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && loaded)
-        {
-            body.SetActive(false);
-            canvas.SetActive(false);
-            capsuleCollider.enabled = false;
-            boxCollider.enabled = false;
+    }
+}
 
-            loaded = false;
+public class SkinnedMeshBoneArrayPopulator
+{
+    public static void populateBoneArray(SkinnedMeshRenderer skinnedMesh)
+    {
+        if (skinnedMesh.rootBone == null)
+        {
+            throw new System.Exception(
+                "Missing root bone; please ensure that the root bone is set before attempting"
+                + " to populate the bone array for the skinned mesh."
+            );
+        }
+
+        var boneArray = new List<Transform>();
+        var currentBone = skinnedMesh.rootBone;
+        recursiveAdd(currentBone, ref boneArray);
+
+        skinnedMesh.bones = boneArray.ToArray();
+    }
+
+    private static void recursiveAdd(Transform currentBone, ref List<Transform> boneArray)
+    {
+        boneArray.Add(currentBone);
+        for (var i = 0; i < currentBone.childCount; i++)
+        {
+            recursiveAdd(currentBone.GetChild(i), ref boneArray);
         }
     }
 }
