@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4883343145576150}
   - component: {fileID: 33358668676854066}
   - component: {fileID: 23969906238695014}
+  - component: {fileID: -2776740987684908411}
+  - component: {fileID: 328542257732105621}
   m_Layer: 0
   m_Name: SM_Env_Dirt_Pile_01
   m_TagString: Untagged
@@ -82,3 +84,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-2776740987684908411
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986578758949820}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: e322bce1b0aa2394aa3ab34d25a5a554, type: 3}
+--- !u!114 &328542257732105621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986578758949820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loaded: 0
+  debug: 0

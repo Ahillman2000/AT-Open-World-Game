@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4243010913433134}
   - component: {fileID: 33550251964618948}
   - component: {fileID: 23012779618084886}
+  - component: {fileID: -7541372996367734145}
+  - component: {fileID: -4395305373453685660}
   m_Layer: 0
   m_Name: SM_Env_Viking_Iceberg_01
   m_TagString: Untagged
@@ -82,3 +84,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-7541372996367734145
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223611693842198}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: f4b098b228a29954ebba95c286738c23, type: 3}
+--- !u!114 &-4395305373453685660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223611693842198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loaded: 0
+  debug: 0

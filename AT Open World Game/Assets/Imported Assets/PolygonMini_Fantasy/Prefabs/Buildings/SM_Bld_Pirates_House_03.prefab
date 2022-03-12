@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4773738040131464}
   - component: {fileID: 33786807928096814}
   - component: {fileID: 23457115686171646}
+  - component: {fileID: 3509593727655370807}
+  - component: {fileID: 3907398566471197466}
   m_Layer: 0
   m_Name: SM_Bld_Pirates_House_03
   m_TagString: Untagged
@@ -82,3 +84,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3509593727655370807
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135345753289100}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: ffd8b72787866f340a4d9387a0996e0f, type: 3}
+--- !u!114 &3907398566471197466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135345753289100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loaded: 0
+  debug: 0

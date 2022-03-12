@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [SerializeField]
 class NPCData
 {
@@ -174,19 +173,23 @@ public class NPCSaveSystem : MonoBehaviour
             UnloadAssets();
         }*/
 
-        if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded)
+        if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && !loaded)
         {
             body.SetActive(true);
             canvas.SetActive(true);
             capsuleCollider.enabled = true;
             boxCollider.enabled = true;
+
+            loaded = true;
         }
-        else if (!meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded)
+        else if (!meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && loaded)
         {
             body.SetActive(false);
             canvas.SetActive(false);
             capsuleCollider.enabled = false;
             boxCollider.enabled = false;
+
+            loaded = false;
         }
     }
 }

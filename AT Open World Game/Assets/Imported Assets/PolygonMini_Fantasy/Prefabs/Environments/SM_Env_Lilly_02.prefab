@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4539859637284328}
   - component: {fileID: 33933048522164368}
   - component: {fileID: 23542469126837434}
+  - component: {fileID: 6923322477978366443}
+  - component: {fileID: -131327148596750152}
   m_Layer: 0
   m_Name: SM_Env_Lilly_02
   m_TagString: Untagged
@@ -82,3 +84,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6923322477978366443
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059105689812590}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: fee9b1b6236ba1348b58c3054e30be91, type: 3}
+--- !u!114 &-131327148596750152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059105689812590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loaded: 0
+  debug: 0

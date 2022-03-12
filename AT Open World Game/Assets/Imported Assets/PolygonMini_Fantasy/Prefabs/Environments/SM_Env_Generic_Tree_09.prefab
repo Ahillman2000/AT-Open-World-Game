@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4649982418719016}
   - component: {fileID: 33391017006298742}
   - component: {fileID: 23311505832534858}
+  - component: {fileID: 6198887657063554004}
+  - component: {fileID: -8438664448935687107}
   m_Layer: 0
   m_Name: SM_Env_Generic_Tree_09
   m_TagString: Untagged
@@ -82,3 +84,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6198887657063554004
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859962090773136}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: fac51ee42cc658d459bca8d88dcda5ca, type: 3}
+--- !u!114 &-8438664448935687107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859962090773136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loaded: 0
+  debug: 0
