@@ -30,7 +30,15 @@ public class Player : MonoBehaviour
     {
         foreach(Quest quest in quests)
         {
-            if(quest.questType == QuestType.REACH && Vector3.Distance(this.transform.position, quest.questItem.transform.position) <= 10)
+            if (quest.questType == QuestType.REACH && Vector3.Distance(this.transform.position, quest.questItem.transform.position) <= 5)
+            {
+                quest.Complete();
+            }
+            if (quest.questType == QuestType.KILL && quest.questItem.GetComponent<Enemy>().health <= 0)
+            {
+                quest.Complete();
+            }
+            if (quest.questType == QuestType.COLLECT && quest.questItem.GetComponent<Collect>().PickedUp())
             {
                 quest.Complete();
             }

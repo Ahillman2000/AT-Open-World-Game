@@ -6,6 +6,7 @@ using UnityEngine;
 public class Quest
 {
     public bool handedOut;
+    public bool active;
     public bool completed;
 
     public string title;
@@ -30,4 +31,6 @@ public class Quest
 public enum QuestType
 {
     REACH,
+    KILL,
+    COLLECT,
 }

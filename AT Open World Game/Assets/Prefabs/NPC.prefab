@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2861066182499186239}
   - component: {fileID: 5569351277572115252}
   - component: {fileID: 5610925702751238010}
+  - component: {fileID: 307415193397700600}
+  - component: {fileID: 3243595312509332741}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -66,6 +68,7 @@ MonoBehaviour:
   body: {fileID: 7523580493525580951}
   canvas: {fileID: 2861066182592889888}
   loaded: 0
+  debug: 0
 --- !u!114 &2861066182499186239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,6 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
+  targetObject: {fileID: 0}
 --- !u!114 &5569351277572115252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest:
     handedOut: 0
+    active: 0
     completed: 0
     title: Find NPC 2
     description: travel across the map to find the other NPC
@@ -112,6 +117,47 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 3, z: 4}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!95 &307415193397700600
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861066182499186236}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: e6f8c6b4cd0c5d24fbefebd224edfdb5, type: 3}
+  m_Controller: {fileID: 9100000, guid: 7664ba843313a5644bcc2c8653972aaa, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &3243595312509332741
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861066182499186236}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &2861066182592889888
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +170,7 @@ GameObject:
   - component: {fileID: 2861066182592889892}
   - component: {fileID: 2861066182592889893}
   - component: {fileID: 2861066182592889890}
+  - component: {fileID: 2432961538738943012}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -212,6 +259,14 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!222 &2432961538738943012
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2861066182592889888}
+  m_CullTransparentMesh: 1
 --- !u!1 &2861066182732235954
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,10 +469,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 95126495896396236, guid: ddafa5fb4e3e8fb4aa97a7ea8e8b72d6, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 7664ba843313a5644bcc2c8653972aaa, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddafa5fb4e3e8fb4aa97a7ea8e8b72d6, type: 3}
 --- !u!1 &7523580493525580951 stripped

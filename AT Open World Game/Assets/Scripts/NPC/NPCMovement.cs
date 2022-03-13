@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NPCMovement : MonoBehaviour
 {
@@ -10,18 +11,43 @@ public class NPCMovement : MonoBehaviour
 
     Animator animationController;
 
+    NavMeshAgent agent;
+
+    [SerializeField] GameObject targetObject;
+
     void Start()
     {
         saveSystem = this.GetComponent<NPCSaveSystem>();
 
-        animationController = GetComponentInChildren<Animator>();
+        animationController = this.GetComponent<Animator>();
+
+        agent = this.GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
         if(saveSystem.loaded)
         {
-            //this.transform.position += transform.forward * speed * Time.deltaTime;
+            if(agent != null && targetObject != null)
+            {
+                Vector3 targetPos = new Vector3(targetObject.transform.position.x, this.transform.position.y, targetObject.transform.position.z);
+
+                /*if (Vector3.Distance(pos, targetPos) > agent.stoppingDistance)
+                {
+                    agent.destination = targetPos;
+                }*/
+
+                agent.SetDestination(targetPos);
+
+                if (agent.velocity.magnitude != 0)
+                {
+                    animationController.SetBool("Move", true);
+                }
+                else
+                {
+                    animationController.SetBool("Move", false);
+                }
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Q))

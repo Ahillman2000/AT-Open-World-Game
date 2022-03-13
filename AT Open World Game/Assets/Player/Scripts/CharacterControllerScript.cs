@@ -25,6 +25,10 @@ public class CharacterControllerScript : MonoBehaviour
     
     Animator animationController;
 
+    // inplement a list of weapons
+    [SerializeField] GameObject sword;
+    bool weaponEquipped;
+
     private void Awake()
     {
         playerInputActions = new PlayerInputActions();
@@ -37,22 +41,34 @@ public class CharacterControllerScript : MonoBehaviour
 
         playerInputActions.Player.Jump.performed += Jump;
         playerInputActions.Player.Jump.Enable();
+
+        playerInputActions.Player.Interact.performed += Interact;
+        playerInputActions.Player.Interact.Enable();
+
+        playerInputActions.Player.EquipWeapon.performed += EquipWeapon;
+        playerInputActions.Player.EquipWeapon.Enable();
+
+        playerInputActions.Player.Attack.performed += Attack;
+        playerInputActions.Player.Attack.Enable();
     }
 
     private void OnDisable()
     {
+        playerInputActions.Player.Movement.Disable();
         playerInputActions.Player.Jump.Disable();
-        playerInputActions.Player.Jump.Disable();
+        playerInputActions.Player.Interact.Disable();
+        playerInputActions.Player.EquipWeapon.Disable();
+        playerInputActions.Player.Attack.Disable();
     }
 
-    void Start()
+    private void Start()
     {
         controller = this.GetComponent<CharacterController>();
 
-        animationController = GetComponentInChildren<Animator>();
+        animationController = this.GetComponent<Animator>();
     }
 
-    void Gravity()
+    private void Gravity()
     {
         if (controller.isGrounded && velocity.y < 0)
         {
@@ -64,7 +80,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
 
-    void GroundCheck()
+    private void GroundCheck()
     {
         RaycastHit hit;
         float distance = 0.5f;
@@ -80,7 +96,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
 
-    void Move()
+    private void Move()
     {
 
         moveVector = Quaternion.Euler(0, mainCamera.transform.eulerAngles.y, 0) * new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
@@ -99,7 +115,7 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
 
-    void Jump(InputAction.CallbackContext obj)
+    private void Jump(InputAction.CallbackContext obj)
     {
         if (isGrounded)
         {
@@ -109,7 +125,46 @@ public class CharacterControllerScript : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void Interact(InputAction.CallbackContext obj)
+    {
+        Debug.Log("Interact");
+    }
+
+    private void EquipWeapon(InputAction.CallbackContext obj)
+    {
+        if(!weaponEquipped)
+        {
+            animationController.SetBool("WeaponDrawn", true);
+        }
+        else
+        {
+            animationController.SetBool("WeaponDrawn", false);
+        }
+    }
+
+
+    public void DrawWeapon()
+    {
+        sword.SetActive(true);
+        weaponEquipped = true;
+    }
+
+    public void SheathWeapon()
+    {
+        sword.SetActive(false);
+        weaponEquipped = false;
+    }
+
+    public void Attack(InputAction.CallbackContext obj)
+    {
+        /*int anim = Random.Range(1, 3);
+        Debug.Log(anim);
+        animationController.SetInteger("AttackAnim", anim);
+
+        animationController.SetTrigger("Attack");*/
+    }
+
+    private void FixedUpdate()
     {
         GroundCheck();
         Gravity();

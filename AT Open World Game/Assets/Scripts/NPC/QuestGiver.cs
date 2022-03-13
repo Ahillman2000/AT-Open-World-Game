@@ -17,7 +17,17 @@ public class QuestGiver : MonoBehaviour
     public void HandOutQuest()
     {
         quest.handedOut = true;
+        quest.active = true;
         Player.Instance.quests.Add(quest);
+
+        if (quest.questType == QuestType.KILL)
+        {
+            quest.questItem.AddComponent<Enemy>();
+        }
+        else if (quest.questType == QuestType.COLLECT)
+        {
+            quest.questItem.AddComponent<Collect>();
+        }
     }
 
     void Update()
