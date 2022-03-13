@@ -6,6 +6,10 @@ public class QuestGiver : MonoBehaviour
 {
     public Quest quest;
 
+    private void Start()
+    {
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(enabled && other.CompareTag("Player") && !quest.handedOut)

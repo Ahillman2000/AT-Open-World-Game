@@ -26,8 +26,12 @@ public class CharacterControllerScript : MonoBehaviour
     Animator animationController;
 
     // inplement a list of weapons
-    [SerializeField] GameObject sword;
     bool weaponEquipped;
+    [SerializeField] GameObject sword;
+    [SerializeField] GameObject attackPoint;
+    [SerializeField] float attackRange;
+    [SerializeField] int attackDamage;
+    [SerializeField] LayerMask enemyLayer;
 
     private void Awake()
     {
@@ -157,11 +161,27 @@ public class CharacterControllerScript : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext obj)
     {
-        /*int anim = Random.Range(1, 3);
-        Debug.Log(anim);
+        int anim = Random.Range(1, 3);
+        //Debug.Log(anim);
         animationController.SetInteger("AttackAnim", anim);
 
-        animationController.SetTrigger("Attack");*/
+        animationController.SetTrigger("Attack");
+
+        attackPoint.SetActive(true);
+        if (attackPoint.activeInHierarchy)
+        {
+            Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, enemyLayer);
+
+            foreach (Collider enemy in hitEnemies)
+            {
+                if(enemy.GetComponent<Enemy>() != null)
+                {
+                    //Debug.Log("Enemy hit " + enemy.gameObject.name);
+                    enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                    attackPoint.SetActive(false);
+                }
+            }
+        }
     }
 
     private void FixedUpdate()
