@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class MeshGenerator : MonoBehaviour
 {
     private Mesh mesh;
@@ -149,5 +148,6 @@ public class MeshGenerator : MonoBehaviour
         
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
+
     }
 }

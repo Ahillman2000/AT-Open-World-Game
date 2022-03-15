@@ -45,7 +45,8 @@ public class NPCSaveSystem : MonoBehaviour
     string dataPath;
 
     MeshGenerator meshGenerator;
-    int occupiedChunk;
+    int startingChunk;
+    int currentChunk;
 
     public bool loaded;
 
@@ -64,7 +65,7 @@ public class NPCSaveSystem : MonoBehaviour
         boxCollider = this.GetComponent<BoxCollider>();
 
         //Save();
-
+        startingChunk = (int)(this.transform.position.z / 32) + ((int)(this.transform.position.x / 32) * 32);
         loaded = true;
     }
 
@@ -157,11 +158,11 @@ public class NPCSaveSystem : MonoBehaviour
 
     private void Update()
     {
-        occupiedChunk = (int)(this.transform.position.z/32) + ((int)(this.transform.position.x/32) * 32);
+        currentChunk = (int)(this.transform.position.z/32) + ((int)(this.transform.position.x/32) * 32);
 
         if (debug)
         {
-            Debug.Log("this object belongs to: " + meshGenerator.chunks[occupiedChunk].gameObject.name + ": " + meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded);
+            Debug.Log("this object belongs to: " + meshGenerator.chunks[currentChunk].gameObject.name + ": " + meshGenerator.chunks[currentChunk].GetComponent<ChunkSaveSystem>().loaded);
         }
 
         /*if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && !loaded)
@@ -173,7 +174,7 @@ public class NPCSaveSystem : MonoBehaviour
             UnloadAssets();
         }*/
 
-        if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && !loaded)
+        if (meshGenerator.chunks[currentChunk].GetComponent<ChunkSaveSystem>().loaded && !loaded)
         {
             body.SetActive(true);
             canvas.SetActive(true);
@@ -182,7 +183,7 @@ public class NPCSaveSystem : MonoBehaviour
 
             loaded = true;
         }
-        else if (!meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded && loaded)
+        else if (!meshGenerator.chunks[currentChunk].GetComponent<ChunkSaveSystem>().loaded && loaded)
         {
             body.SetActive(false);
             canvas.SetActive(false);
@@ -192,4 +193,15 @@ public class NPCSaveSystem : MonoBehaviour
             loaded = false;
         }
     }
+
+    public GameObject GetStartingChunk()
+    {
+        return meshGenerator.chunks[startingChunk].gameObject;
+    }
+    public GameObject GetCurrentChunk()
+    {
+        return meshGenerator.chunks[currentChunk].gameObject;
+    }
+
+
 }
