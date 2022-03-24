@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 644492474207142680}
   - component: {fileID: 636102462683552348}
   - component: {fileID: 3649850073105392883}
-  - component: {fileID: 2232291298548864942}
   m_Layer: 0
   m_Name: Castle_Tower_flag
   m_TagString: Untagged
@@ -98,20 +97,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 2f48c3170c075d9448f41af419468da6, type: 3}
---- !u!114 &2232291298548864942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 612624904965617592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0
 --- !u!1 &4666325506317185540
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2497374225434156962}
+  - component: {fileID: 8268449667192020707}
   m_Layer: 0
   m_Name: Caste_Tower
   m_TagString: Untagged
@@ -144,6 +130,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8268449667192020707
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4666325506317185540}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6398674846899102903
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +155,6 @@ GameObject:
   - component: {fileID: 6394827004878796209}
   - component: {fileID: 6385828458819165101}
   - component: {fileID: 8078628793412384942}
-  - component: {fileID: 1979912469633640680}
   m_Layer: 0
   m_Name: Castle_Tower_base
   m_TagString: Untagged
@@ -242,20 +240,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 161b280511cf58949879fa4f9dbb81bf, type: 3}
---- !u!114 &1979912469633640680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6398674846899102903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0
 --- !u!1 &7025915599323462765
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +252,6 @@ GameObject:
   - component: {fileID: 6276345469936201705}
   - component: {fileID: 633128262617586122}
   - component: {fileID: 7061149972377163532}
-  - component: {fileID: 4850863723470610930}
   m_Layer: 0
   m_Name: Castle_Tower_flag (1)
   m_TagString: Untagged
@@ -354,20 +337,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 2f48c3170c075d9448f41af419468da6, type: 3}
---- !u!114 &4850863723470610930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7025915599323462765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0
 --- !u!1 &7763976236506785367
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +349,6 @@ GameObject:
   - component: {fileID: 7765601961328539207}
   - component: {fileID: 7777537397665723467}
   - component: {fileID: 3755741067275048637}
-  - component: {fileID: 1374862957560675322}
   m_Layer: 0
   m_Name: Castle_Tower_top
   m_TagString: Untagged
@@ -470,20 +438,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: dc7096c2ecfec96419517a66a2fcbda3, type: 3}
---- !u!114 &1374862957560675322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7763976236506785367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0
 --- !u!1 &8392104452655745010
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +450,6 @@ GameObject:
   - component: {fileID: 5799133812360908304}
   - component: {fileID: 7249149565302322289}
   - component: {fileID: 4481639091292940506}
-  - component: {fileID: 8435907422079572469}
   m_Layer: 0
   m_Name: Castle_Tower_flag (3)
   m_TagString: Untagged
@@ -582,20 +535,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 2f48c3170c075d9448f41af419468da6, type: 3}
---- !u!114 &8435907422079572469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8392104452655745010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0
 --- !u!1 &8405506426900253392
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +547,6 @@ GameObject:
   - component: {fileID: 2379475928625510330}
   - component: {fileID: 8602652981740866988}
   - component: {fileID: 6039552671210212800}
-  - component: {fileID: 3469702498896299087}
   m_Layer: 0
   m_Name: Castle_Tower_flag (2)
   m_TagString: Untagged
@@ -694,17 +632,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 2f48c3170c075d9448f41af419468da6, type: 3}
---- !u!114 &3469702498896299087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8405506426900253392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0

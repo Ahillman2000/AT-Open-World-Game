@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 33013169008775860}
   - component: {fileID: 23397544492671268}
   - component: {fileID: 6593676953869404097}
-  - component: {fileID: 5981065481273511985}
   m_Layer: 0
   m_Name: SM_Prop_Pirate_Boat_01
-  m_TagString: Untagged
+  m_TagString: GameObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,17 +97,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 8fb5fef42de332f41862de360586fe8d, type: 3}
---- !u!114 &5981065481273511985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1444128244280170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0

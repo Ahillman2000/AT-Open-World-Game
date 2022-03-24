@@ -32,6 +32,7 @@ public class CharacterControllerScript : MonoBehaviour
     [SerializeField] float attackRange;
     [SerializeField] int attackDamage;
     [SerializeField] LayerMask enemyLayer;
+    int attackAnim = 2;
 
     private void Awake()
     {
@@ -102,7 +103,6 @@ public class CharacterControllerScript : MonoBehaviour
 
     private void Move()
     {
-
         moveVector = Quaternion.Euler(0, mainCamera.transform.eulerAngles.y, 0) * new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
 
         controller.Move(speed * Time.deltaTime * moveVector);
@@ -161,24 +161,36 @@ public class CharacterControllerScript : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext obj)
     {
-        int anim = Random.Range(1, 3);
-        //Debug.Log(anim);
-        animationController.SetInteger("AttackAnim", anim);
-
-        animationController.SetTrigger("Attack");
-
-        attackPoint.SetActive(true);
-        if (attackPoint.activeInHierarchy)
+        if(weaponEquipped)
         {
-            Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, enemyLayer);
-
-            foreach (Collider enemy in hitEnemies)
+            //int anim = Random.Range(1, 3);
+            switch(attackAnim)
             {
-                if(enemy.GetComponent<Enemy>() != null)
+                case 1:
+                    attackAnim = 2;
+                    break;
+                case 2:
+                    attackAnim = 1;
+                    break;
+            }
+            //Debug.Log(anim);
+
+            animationController.SetTrigger("Attack");
+            animationController.SetInteger("AttackAnim", attackAnim);
+
+            attackPoint.SetActive(true);
+            if (attackPoint.activeInHierarchy)
+            {
+                Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, enemyLayer);
+
+                foreach (Collider enemy in hitEnemies)
                 {
-                    //Debug.Log("Enemy hit " + enemy.gameObject.name);
-                    enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
-                    attackPoint.SetActive(false);
+                    if (enemy.GetComponent<Enemy>() != null)
+                    {
+                        //Debug.Log("Enemy hit " + enemy.gameObject.name);
+                        enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                        attackPoint.SetActive(false);
+                    }
                 }
             }
         }

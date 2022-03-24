@@ -13,17 +13,24 @@ public class Enemy : MonoBehaviour
 
     Animator animationController;
 
-    [SerializeField] EnemyState state = EnemyState.IDLE;
+    private enum State
+    {
+        IDLE,
+        PATROL,
+        CHASE,
+        FLEE,
+    }
+    [SerializeField] State state = State.IDLE;
 
     NavMeshAgent agent;
     NavMeshPath navMeshPath;
 
-    public Vector3 target;
+    [SerializeField] Vector3 target;
 
     bool patrolPointGenerated;
-    Vector3 patrolpoint;
-
-    [SerializeField] GameObject patrolPointDebugObject;
+    Vector3 patrolPoint;
+    bool fleePointGenerated;
+    Vector3 fleePoint;
 
     void Start()
     {
@@ -67,7 +74,11 @@ public class Enemy : MonoBehaviour
 
         foreach (Component component in this.GetComponents(typeof(Component)))
         {
-            if(component.GetType() != typeof(Transform))
+            if(component.GetType() == typeof(Transform) || component.GetType() == typeof(Enemy))
+            {
+                continue;
+            }
+            else
             {
                 Destroy(component);
             }
@@ -86,23 +97,21 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if(state == EnemyState.IDLE)
+        switch(state)
         {
-            target = this.transform.position;
-        }
-        else if(state == EnemyState.PATROL)
-        {
-            Patrol();
-        }
-        else if (state == EnemyState.CHASE)
-        {
-            Flee();
-        }
-        else if (state == EnemyState.FLEE)
-        {
-            Vector3 dirToPlayer = (this.transform.position - Player.Instance.gameObject.transform.position).normalized;
-            Vector3 fleePos = this.transform.position + dirToPlayer;
-            target = fleePos;
+            case State.IDLE:
+                target = this.transform.position;
+                break;
+            case State.PATROL:
+                Patrol();
+                break;
+
+            case State.CHASE:
+                target = Player.Instance.gameObject.transform.position;
+                break;
+            case State.FLEE:
+                Flee();
+                break;
         }
 
         Move();
@@ -115,20 +124,20 @@ public class Enemy : MonoBehaviour
 
             Vector3 offset = new Vector3(Random.Range(-meshGenerator.chunkSize / 2, meshGenerator.chunkSize / 2 + 1), this.transform.position.y, Random.Range(-meshGenerator.chunkSize / 2, meshGenerator.chunkSize / 2 + 1));
 
-            patrolpoint = startingChunkPos + offset;
-            Debug.Log("new patrol point generated: " + patrolpoint);
+            patrolPoint = startingChunkPos + offset;
+            Debug.Log("new patrol point generated: " + patrolPoint);
 
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(patrolpoint, out hit, Mathf.Infinity, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(patrolPoint, out hit, Mathf.Infinity, NavMesh.AllAreas))
             {
-                patrolpoint = hit.position;
-                Debug.Log("patrol point adjusted to: " + patrolpoint);
+                patrolPoint = hit.position;
+                Debug.Log("patrol point adjusted to: " + patrolPoint);
             }
 
-            if (agent.CalculatePath(patrolpoint, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete)
+            if (agent.CalculatePath(patrolPoint, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete)
             {
                 //move to target
-                //Debug.Log("path is valid");
+                Debug.Log("path is valid");
                 patrolPointGenerated = true;
             }
             else
@@ -138,9 +147,9 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(agent.transform.position, patrolpoint) > agent.stoppingDistance)
+            if (Vector3.Distance(agent.transform.position, patrolPoint) > agent.stoppingDistance)
             {
-                target = patrolpoint;
+                target = patrolPoint;
                 //Debug.Log("enemy moving towards patrol point: " + patrolpoint);
             }
             else
@@ -152,31 +161,37 @@ public class Enemy : MonoBehaviour
     }
     void Flee()
     {
-        Vector3 dirToPlayer = (this.transform.position - Player.Instance.gameObject.transform.position).normalized;
-        Vector3 fleePos = this.transform.position + dirToPlayer;
-        target = fleePos;
+        Debug.Log("flee");
+        Vector3 dirToPlayer = (this.transform.position - Player.Instance.gameObject.transform.position);
+        fleePoint = this.transform.position + dirToPlayer;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(fleePoint, out hit, Mathf.Infinity, NavMesh.AllAreas))
+        {
+            patrolPoint = hit.position;
+            Debug.Log("flee point adjusted to: " + patrolPoint);
+        }
+
+        target = fleePoint;
     }
 
     void Move()
     {
         //Debug.Log(saveSystem.loaded + " " + agent + " " + target);
 
-        if (saveSystem.loaded)
+        if (saveSystem.loaded && agent != null && health > 0)
         {
-            if (agent != null)
+            Vector3 targetPos = new Vector3(target.x, this.transform.position.y, target.z);
+
+            agent.SetDestination(targetPos);
+
+            if (agent.velocity.magnitude != 0)
             {
-                Vector3 targetPos = new Vector3(target.x, this.transform.position.y, target.z);
-
-                agent.SetDestination(targetPos);
-
-                if (agent.velocity.magnitude != 0)
-                {
-                    animationController.SetBool("Move", true);
-                }
-                else
-                {
-                    animationController.SetBool("Move", false);
-                }
+                animationController.SetBool("Move", true);
+            }
+            else
+            {
+                animationController.SetBool("Move", false);
             }
         }
         else
@@ -184,12 +199,4 @@ public class Enemy : MonoBehaviour
             
         }
     }
-}
-
-public enum EnemyState
-{
-    IDLE,
-    PATROL,
-    CHASE,
-    FLEE,
 }

@@ -9,9 +9,19 @@ public class NPCMovement : MonoBehaviour
 
     Animator animationController;
 
-    NavMeshAgent agent;
+    private enum State
+    {
+        IDLE,
+        JOB,
+    }
+    [SerializeField] State state = State.IDLE;
 
-    public GameObject targetObject;
+    NavMeshAgent agent;
+    NavMeshPath navMeshPath;
+
+    [SerializeField] Vector3 target;
+    Vector3 startPos;
+    [SerializeField] GameObject job;
 
     void Start()
     {
@@ -20,33 +30,48 @@ public class NPCMovement : MonoBehaviour
         animationController = this.GetComponent<Animator>();
 
         agent = this.GetComponent<NavMeshAgent>();
+        navMeshPath = new NavMeshPath();
+
+        startPos = this.transform.position;
     }
 
     void Update()
     {
-        if(saveSystem.loaded)
+        switch (state)
         {
-            if(agent != null && targetObject != null)
-            {
-                Vector3 targetPos = new Vector3(targetObject.transform.position.x, this.transform.position.y, targetObject.transform.position.z);
-
-                agent.SetDestination(targetPos);
-
-                if (agent.velocity.magnitude != 0)
-                {
-                    animationController.SetBool("Move", true);
-                }
-                else
-                {
-                    animationController.SetBool("Move", false);
-                }
-            }
+            case State.IDLE:
+                target = startPos;
+                break;
+            case State.JOB:
+                target = job.transform.position;
+                break;
         }
+
+        Move();
 
         /*if (Input.GetKeyDown(KeyCode.Q))
         {
             //Debug.Log("Trigger wave anim");
             animationController.SetTrigger("Wave");
         }*/
+    }
+
+    void Move()
+    {
+        if (saveSystem.loaded && agent != null)
+        {
+            Vector3 targetPos = new Vector3(target.x, this.transform.position.y, target.z);
+
+            agent.SetDestination(targetPos);
+
+            if (agent.velocity.magnitude != 0)
+            {
+                animationController.SetBool("Move", true);
+            }
+            else
+            {
+                animationController.SetBool("Move", false);
+            }
+        }
     }
 }

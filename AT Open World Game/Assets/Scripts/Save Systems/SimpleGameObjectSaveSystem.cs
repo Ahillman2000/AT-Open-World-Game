@@ -23,11 +23,11 @@ public class SimpleGameObjectSaveSystem : MonoBehaviour
 
         occupiedChunk = (int)(this.transform.position.z / 32) + ((int)(this.transform.position.x / 32) * 32);
 
-        if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded) { loaded = true; }
-        else { loaded = false; }
+        /*if (meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().loaded) { loaded = true; }
+        else { loaded = false; }*/
 
+        //meshGenerator.chunks[occupiedChunk].GetComponent<ChunkSaveSystem>().objectsInChunk.Add(this.gameObject);
     }
-
 
     void Update()
     {

@@ -14,6 +14,7 @@ public class MeshGenerator : MonoBehaviour
     private int zSize;
 
     private string mapName = "===== MAP =====";
+    private string chunkTag = "Chunk";
 
     [SerializeField] private float scale = 20f;
 
@@ -59,6 +60,7 @@ public class MeshGenerator : MonoBehaviour
             for (int z = 0; z < numberOfChunks; z++)
             {
                 GameObject chunk = new GameObject("chunk " + x + " , " + z);
+                chunk.tag = chunkTag;
 
                 chunks.Add(chunk);
 
@@ -71,7 +73,7 @@ public class MeshGenerator : MonoBehaviour
 
                 chunk.AddComponent<ChunkSaveSystem>();
                 chunk.GetComponent<ChunkSaveSystem>().SetMesh(mesh, terrainMaterial);
-                chunk.GetComponent<ChunkSaveSystem>().Save();
+                chunk.GetComponent<ChunkSaveSystem>().SaveChunk();
 
                 UpdateMesh();
 
@@ -80,6 +82,39 @@ public class MeshGenerator : MonoBehaviour
         }
     }
 
+    [ContextMenu("UpdateMap")]
+    private void UpdateMap()
+    {
+        foreach (GameObject chunk in chunks)
+        {
+            chunk.GetComponent<ChunkSaveSystem>().pathNames.Clear();
+            chunk.GetComponent<ChunkSaveSystem>().gameObjectsInChunk.Clear();
+            chunk.GetComponent<ChunkSaveSystem>().npcsInChunk.Clear();
+        }
+
+        foreach (GameObject chunk in chunks)
+        {
+            Collider[] colliders = Physics.OverlapSphere(chunk.transform.position + new Vector3(16,20,16), chunkSize * 0.75f);
+            foreach (var collider in colliders)
+            {
+                //collider.gameObject.transform.parent = chunk.transform;
+
+                if (chunks[((int)(collider.gameObject.transform.position.z / 32) + ((int)(collider.gameObject.transform.position.x / 32) * 32))] == chunk)
+                {
+                    /*if (collider.gameObject.CompareTag("NPC"))
+                    {
+                        chunk.GetComponent<ChunkSaveSystem>().npcsInChunk.Add(collider.gameObject);
+                    }*/
+                    if (collider.gameObject.CompareTag("GameObject"))
+                    {
+                        chunk.GetComponent<ChunkSaveSystem>().gameObjectsInChunk.Add(collider.gameObject);
+                    }
+                }
+            }
+
+            chunk.GetComponent<ChunkSaveSystem>().SaveChunkObjects();
+        }
+    }
 
     private void CreateShape(int offsetX, int offsetZ, int chunkSize)
     {

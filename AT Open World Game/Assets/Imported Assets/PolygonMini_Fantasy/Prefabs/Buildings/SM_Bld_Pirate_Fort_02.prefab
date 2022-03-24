@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 33233519767400010}
   - component: {fileID: 23005857000393656}
   - component: {fileID: -3809306737090068510}
-  - component: {fileID: 7423738515110446646}
   m_Layer: 0
   m_Name: SM_Bld_Pirate_Fort_02
-  m_TagString: Untagged
+  m_TagString: GameObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,17 +97,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: dbf019ff349ab9740b7c4072fa2bfb78, type: 3}
---- !u!114 &7423738515110446646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1370823020582534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0

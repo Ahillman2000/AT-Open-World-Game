@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 33149369483295162}
   - component: {fileID: 23600662837446908}
   - component: {fileID: 640695006976571480}
-  - component: {fileID: 4961250656841848615}
   m_Layer: 0
   m_Name: SM_Env_Generic_Bush_01
-  m_TagString: Untagged
+  m_TagString: GameObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,17 +97,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: db58c783208120c4a99ba7c30fcd2cc1, type: 3}
---- !u!114 &4961250656841848615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1222998144502202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0

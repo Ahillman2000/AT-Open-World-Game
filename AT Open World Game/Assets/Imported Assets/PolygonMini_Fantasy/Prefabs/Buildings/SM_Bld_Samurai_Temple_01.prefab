@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 33347980049707868}
   - component: {fileID: 23448683758551860}
   - component: {fileID: 4218190135060727533}
-  - component: {fileID: 6522453904393081487}
   m_Layer: 0
   m_Name: SM_Bld_Samurai_Temple_01
-  m_TagString: Untagged
+  m_TagString: GameObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,17 +97,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 6a9ced45f71b0bf429415814d8d48101, type: 3}
---- !u!114 &6522453904393081487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1662837858102748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0

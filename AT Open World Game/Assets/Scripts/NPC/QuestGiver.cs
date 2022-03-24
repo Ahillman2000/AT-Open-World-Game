@@ -26,7 +26,7 @@ public class QuestGiver : MonoBehaviour
 
         if (quest.questType == QuestType.KILL)
         {
-            quest.questItem.AddComponent<Enemy>();
+            //quest.questItem.AddComponent<Enemy>();
         }
         else if (quest.questType == QuestType.COLLECT)
         {

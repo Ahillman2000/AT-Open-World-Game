@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 33142065332071122}
   - component: {fileID: 23543496646175788}
   - component: {fileID: -2438906618884758826}
-  - component: {fileID: -34022199618116097}
   m_Layer: 0
   m_Name: SM_Bld_Viking_House_01
-  m_TagString: Untagged
+  m_TagString: GameObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,17 +97,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 98c286c9c2f71e54385bb6f70f8ece8b, type: 3}
---- !u!114 &-34022199618116097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1206063750194024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0

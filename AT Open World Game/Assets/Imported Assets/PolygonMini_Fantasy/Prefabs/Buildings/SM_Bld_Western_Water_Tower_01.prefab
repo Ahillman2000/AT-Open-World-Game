@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 33026395013393530}
   - component: {fileID: 23249387804698548}
   - component: {fileID: 4261598260309353217}
-  - component: {fileID: 7829928118050950466}
   m_Layer: 0
   m_Name: SM_Bld_Western_Water_Tower_01
-  m_TagString: Untagged
+  m_TagString: GameObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,17 +97,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: da3021b4a79f5b846b0703a9973cb65c, type: 3}
---- !u!114 &7829928118050950466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1690905454681636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0

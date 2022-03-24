@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 33354543924589640}
   - component: {fileID: 23808689751033460}
   - component: {fileID: -7588906784870837214}
-  - component: {fileID: 3414184589469178016}
   m_Layer: 0
   m_Name: SM_Prop_Adventure_Cover_01
-  m_TagString: Untagged
+  m_TagString: GameObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,17 +97,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 0ac3ef2aee580d647ac68deb40426e2d, type: 3}
---- !u!114 &3414184589469178016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1315957774207914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a33d0c43a72b224cb6a636a320468ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loaded: 0
-  debug: 0
