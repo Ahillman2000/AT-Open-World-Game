@@ -51,7 +51,7 @@ public class ChunkSaveSystem : MonoBehaviour
 
     private void Start()
     {
-        
+        InvokeRepeating(nameof(StreamChunks), 0f, 1f);
     }
 
     public void SetMesh(Mesh _meshToSet, Material _material)
@@ -246,7 +246,10 @@ public class ChunkSaveSystem : MonoBehaviour
             ClearMesh();
             //Load();
         }*/
+    }
 
+    private void StreamChunks()
+    {
         if ((Vector3.Distance(this.transform.position, Player.Instance.transform.position) <= Player.Instance.drawDistance) && !loaded)
         {
             LoadChunk();
