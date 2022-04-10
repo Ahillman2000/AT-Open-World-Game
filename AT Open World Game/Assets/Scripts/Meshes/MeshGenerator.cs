@@ -31,11 +31,12 @@ public class MeshGenerator : MonoBehaviour
 
     public List<GameObject> chunks;
 
-    void Start()
+    private void Awake()
     {
-        //this.transform.position = new Vector3(-(xSize / 2), 0, -(zSize / 2));
-
-        //GenerateMap();
+        if (GameObject.Find(mapName) == null)
+        {
+            GenerateMap();
+        }
     }
 
     [ContextMenu ("GenerateMap")]
@@ -80,6 +81,8 @@ public class MeshGenerator : MonoBehaviour
                 chunk.transform.parent = map.transform;
             }
         }
+
+        UpdateMap();
     }
 
     [ContextMenu("UpdateMap")]
